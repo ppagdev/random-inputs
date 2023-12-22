@@ -1,0 +1,2 @@
+I don't usually use Windows, so thank you very much to DougDoug and anyone else who contributed to https://github.com/DougDougGithub/TwitchPlays
+I used their DirectInput compatibility script which made working with this completely rigid and inflexible operating system a lot easier.

@@ -1,20 +1,18 @@
 import random
-from pynput.keyboard import Key, Controller
 from time import sleep
-
-keyboard = Controller()
+from keycodes import *
 
 # all buttons:
-L       = 'q'
-R       = 'e'
-UP      = 'w'
-DOWN    = 's'
-LEFT    = 'a'
-RIGHT   = 'd'
-A       = 'c'
-B       = 'x'
-SELECT  = 'z'
-START   = 'v'
+# L       = 'q'
+# R       = 'e'
+# UP      = 'w'
+# DOWN    = 's'
+# LEFT    = 'a'
+# RIGHT   = 'd'
+# A       = 'c'
+# B       = 'x'
+# SELECT  = 'z'
+# START   = 'v'
 
 # pick random number
 def randomNumber():
@@ -26,35 +24,25 @@ def randomNumber():
 def pressKey(number):
     match number:
         case 0:
-            keyboard.press(L)
-            keyboard.release(L)
+            HoldAndReleaseKey(Q,1)
         case 1:
-            keyboard.press(R)
-            keyboard.release(R)
+            HoldAndReleaseKey(E,1)
         case 2:
-            keyboard.press(UP)
-            keyboard.release(UP)
+            HoldAndReleaseKey(W,1)
         case 3:
-            keyboard.press(DOWN)
-            keyboard.release(DOWN)
+            HoldAndReleaseKey(S,1)
         case 4:
-            keyboard.press(LEFT)
-            keyboard.release(LEFT)
+            HoldAndReleaseKey(A,1)
         case 5:
-            keyboard.press(RIGHT)
-            keyboard.release(RIGHT)
+            HoldAndReleaseKey(D,1)
         case 6:
-            keyboard.press(A)
-            keyboard.release(A)
+            HoldAndReleaseKey(C,1)
         case 7:
-            keyboard.press(B)
-            keyboard.release(B)
+            HoldAndReleaseKey(X,1)
         case 8:
-            keyboard.press(SELECT)
-            keyboard.release(SELECT)
+            HoldAndReleaseKey(Z,1)
         case 7:
-            keyboard.press(START)
-            keyboard.release(START)
+            HoldAndReleaseKey(V,1)
 
 # script loop
 sleepTime = 0.2
