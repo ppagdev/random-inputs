@@ -13,39 +13,57 @@ from keycodes import *
 # B       = 'x'
 # SELECT  = 'z'
 # START   = 'v'
+allKeys = ['UP','DOWN','LEFT','RIGHT','A','B','SELECT','START']
 
 # pick random number
 def randomNumber():
-    totalKeys = 10
-    # randomly choose number between 0 and totalKeys
-    return random.randint(0,totalKeys)
+    numOfKeys = len(allKeys)-1
+    # randomly choose number
+    return random.randint(0,numOfKeys)
+
+def executeAction(key, action):
+    pressTime = random.uniform(0.1,1.0)
+    holdTime = random.uniform(3.0,5.0)
+    match action:
+        case 'press':
+            HoldAndReleaseKey(key,pressTime)
+        case 'hold':
+            HoldAndReleaseKey(key,holdTime)
+    
 
 # execute key press
 def pressKey(number):
-    match number:
-        case 0:
-            HoldAndReleaseKey(Q,1)
-        case 1:
-            HoldAndReleaseKey(E,1)
-        case 2:
-            HoldAndReleaseKey(W,1)
-        case 3:
-            HoldAndReleaseKey(S,1)
-        case 4:
-            HoldAndReleaseKey(A,1)
-        case 5:
-            HoldAndReleaseKey(D,1)
-        case 6:
-            HoldAndReleaseKey(C,1)
-        case 7:
-            HoldAndReleaseKey(X,1)
-        case 8:
-            HoldAndReleaseKey(Z,1)
-        case 7:
-            HoldAndReleaseKey(V,1)
+    key = allKeys[number]
+    actions = ['press','hold']
+    action = actions[random.randint(0,1)]
+    match key:
+        case 'L':
+            executeAction(Q, 'press')
+        case 'R':
+            executeAction(E, 'press')
+        case 'UP':
+            executeAction(W, action)
+        case 'DOWN':
+            executeAction(S, action)
+        case 'LEFT':
+            executeAction(A, action)
+        case 'RIGHT':
+            executeAction(D, action)
+        case 'A':
+            executeAction(C, 'press')
+        case 'B':
+            executeAction(X, 'press')
+        case 'SELECT':
+            selectChance = random.randint(0,10)
+            if selectChance == 0:
+                executeAction(Z, 'press')
+        case 'START':
+            startChance = random.randint(0,10)
+            if startChance == 0:
+                executeAction(V, 'press')
 
 # script loop
-sleepTime = 0.2
+sleepTime = 0.1
 print("Script is running!")
 while True:
     pressKey(randomNumber())
