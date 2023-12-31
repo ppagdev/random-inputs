@@ -23,19 +23,25 @@ def randomNumber():
 
 def executeAction(key, action):
     pressTime = random.uniform(0.1,1.0)
-    holdTime = random.uniform(3.0,5.0)
     match action:
         case 'press':
-            HoldAndReleaseKey(key,pressTime)
+            HoldAndReleaseKey(key, pressTime)
         case 'hold':
-            HoldAndReleaseKey(key,holdTime)
-    
+            ReleaseKey(W)
+            ReleaseKey(S)
+            ReleaseKey(A)
+            ReleaseKey(D)
+            HoldKey(key)
 
 # execute key press
 def pressKey(number):
     key = allKeys[number]
     actions = ['press','hold']
-    action = actions[random.randint(0,1)]
+    if random.randint(0,3) == 0:
+        action = actions[1]
+    else:
+        action = actions[0]
+    print(action + '\t' + key)
     match key:
         case 'L':
             executeAction(Q, 'press')
@@ -62,6 +68,14 @@ def pressKey(number):
             if startChance == 0:
                 executeAction(V, 'press')
 
+
+#countdown
+print("Starting in ")
+sleep(0.5)
+for i in range(3,0,-1):
+    print(i)
+    sleep(1)
+    
 # script loop
 sleepTime = 0.1
 print("Script is running!")
