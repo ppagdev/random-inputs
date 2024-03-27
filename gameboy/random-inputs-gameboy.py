@@ -5,10 +5,10 @@ from keycodes import *
 
 # all buttons:
 #################################
-UP      = W
-DOWN    = S
-LEFT    = A
-RIGHT   = D
+DPAD_UP      = W
+DPAD_DOWN    = S
+DPAD_LEFT    = A
+DPAD_RIGHT   = D
 #################################
 CONSOLE_L       = Q
 CONSOLE_R       = E
@@ -26,13 +26,13 @@ def addAction(action,frequency):
         myActions.append(action)
 
 #################################
-addAction(UP, 1)
-addAction(DOWN, 1)
-addAction(LEFT, 1)
-addAction(RIGHT, 1)
+addAction(DPAD_UP, 1)
+addAction(DPAD_DOWN, 1)
+addAction(DPAD_LEFT, 1)
+addAction(DPAD_RIGHT, 1)
 #################################
-addAction(CONSOLE_L, 1)
-addAction(CONSOLE_R, 1)
+addAction(CONSOLE_L, 0)
+addAction(CONSOLE_R, 0)
 addAction(CONSOLE_SELECT, 1)
 addAction(CONSOLE_START, 1)
 #################################
@@ -45,6 +45,11 @@ currentList = myActions
 #OVERRIDES
 def overrides(action):
     if action == CONSOLE_START:
+        if random.randint(0,10) == 0:
+            return action
+        else:
+            return 'cancel'
+    if action == CONSOLE_SELECT:
         if random.randint(0,10) == 0:
             return action
         else:
@@ -63,10 +68,9 @@ def processAction(processIndex):
     while True:
         action = randomAction()
         if overrides(action) == 'cancel':
-            print('skip')
             continue
         print('P' + str(processIndex) + ': ' + str(action))
-        pressTime = random.uniform(0.01,5.0)
+        pressTime = random.uniform(0.1,2.5)
         HoldAndReleaseKey(action,pressTime)
 
 #countdown
@@ -82,5 +86,5 @@ if __name__ == '__main__':
     countdown()
     freeze_support()
     set_start_method('spawn')
-    for i in range(3):
+    for i in range(2):
         Process(target=processAction, args=(i+1,)).start()
