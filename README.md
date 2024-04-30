@@ -1,2 +1,2 @@
-I don't usually use Windows, so thank you very much to DougDoug and anyone else who contributed to https://github.com/DougDougGithub/TwitchPlays
-I used their DirectInput compatibility script which made working with this completely rigid and inflexible operating system a lot easier.
+The windows script is using code from https://github.com/DougDougGithub/TwitchPlays
+This is no longer necessary and the linux script should work on windows as well because of the awesome work at https://github.com/gauthsvenkat/pyKey however I don't currently have windows on any of my machines so I can't test it so it's staying like this for now.
