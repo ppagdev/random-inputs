@@ -1,26 +1,34 @@
+import os
+import signal
+import sys
 from multiprocessing import Process, freeze_support, set_start_method
 import random
 from time import sleep
 from pyKey import pressKey, releaseKey, press, sendSequence, showKeys
+import subprocess
 
-showKeys()
-
+myActions = dict(
 # all buttons:
 #################################
-FORWARD         = 'W'
-#################################
+forward = 'q',
+back = 'w',
+left = 'e',
+right = 'r',
+################################
+move_camera = 'MOVE_MOUSE',
+################################
+left_hand = 't',
+right_hand = 'y',
+activate = 'u',
+sheathe = 'i',
+jump = 'o',
+sprint = 'p',
+power = 'a',
+sneak = 's',
+menu = 'MENU',
+)
 
-myActions = []
-
-def addAction(action,frequency):
-    for i in range(frequency):
-        myActions.append(action)
-
-#################################
-addAction(FORWARD, 1)
-#################################
-
-currentList = myActions
+currentList = list(myActions.keys())
 
 # pick random action
 def randomAction():
@@ -30,11 +38,29 @@ def randomAction():
 
 # process action
 def processAction(processIndex):
-    while True:
-        pressTime = random.uniform(0.1,5.0)
-        action = randomAction()
-        print('P' + str(processIndex) + ': ' + str(action))
-        press(action,pressTime)
+    try:
+        while True:
+            pressTime = random.uniform(0.1, 10.0)
+            action_name = randomAction()
+            action = myActions[action_name]
+            print('P' + str(processIndex) + ': ' + str(action_name) + ', ' + str(round(pressTime, 2)) + ' seconds')
+
+            if action == 'MOVE_MOUSE':
+                subprocess.call(["xdotool", "mousemove_relative", str(random.randint(-200, 200)), str(random.randint(-200, 200))])
+                continue
+            elif action == 'MENU':
+                action = random.choice(['d','f','g'])
+
+            elif action == 'LEFT_CLICK':
+                subprocess.call(["xdotool", "click", "1"])
+                continue
+            elif action == 'RIGHT_CLICK':
+                subprocess.call(["xdotool", "click", "3"])
+                continue
+
+            press(action, pressTime)
+    except KeyboardInterrupt:
+        os.kill(os.getpid(), signal.SIGINT)
 
 #countdown
 def countdown():
@@ -46,8 +72,18 @@ def countdown():
     print("Script is running!")
 
 if __name__ == '__main__':
-    countdown()
-    freeze_support()
-    set_start_method('spawn')
-    for i in range(5):
-        Process(target=processAction, args=(i+1,)).start()
+    try:
+        countdown()
+        freeze_support()
+        set_start_method('spawn')
+        for i in range(5):
+            Process(target=processAction, args=(i+1,)).start()
+    except KeyboardInterrupt:
+        print("Releasing all keys...")
+        for key in currentList:
+            try:
+                releaseKey(key)
+            except:
+                continue
+        print("Done! Exiting program...")
+        sys.exit()
